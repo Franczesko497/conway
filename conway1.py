@@ -1,4 +1,3 @@
-
 import tkinter as tk
 ROZDZ_X = 1600
 ROZDZ_Y = 900
@@ -31,6 +30,10 @@ def update_grid(val):
     global ROZMIAR
     ROZMIAR = size
 
+def get_color(x, y, cols, rows):
+    idx = y * cols + x + 1
+    return canvas.itemcget(idx, "fill")
+
 def gra():
     cell_size = ROZDZ_Y/ROZMIAR
     ry = int(ROZMIAR * 16/9)
@@ -38,22 +41,10 @@ def gra():
     #canvas.find_all()
     #canvas.itemconfig(item, fill="red")
     #kolor = canvas.itemcget(item, "fill")
-    for x in range(int(ROZMIAR * 16/9)): #poziomo
-        for y in range(ROZMIAR): #pionowo
-            s1 = kolor = canvas.itemcget(((x-1)%ry)*(ry) + (y-1)%(ROZMIAR) + 1, "fill")
-            s2 = kolor = canvas.itemcget(((x-1)%ry)*(ry) + (y)%(ROZMIAR) + 1, "fill")
-            s3 = kolor = canvas.itemcget(((x-1)%ry)*(ry) + (y+1)%(ROZMIAR) + 1, "fill")
-            s4 = kolor = canvas.itemcget(((x)%ry)*(ry) + (y-1)%(ROZMIAR) + 1, "fill")
-            s5 = kolor = canvas.itemcget(((x)%ry)*(ry) + (y+1)%(ROZMIAR) + 1, "fill")
-            s6 = kolor = canvas.itemcget(((x+1)%ry)*(ry) + (y-1)%(ROZMIAR) + 1, "fill")
-            s7 = kolor = canvas.itemcget(((x+1)%ry)*(ry) + (y)%(ROZMIAR) + 1, "fill")
-            s8 = kolor = canvas.itemcget(((x+1)%ry)*(ry) + (y+1)%(ROZMIAR) + 1, "fill")
-            S = len([x for x in [s1, s2, s3, s4, s5, s6, s7, s8] if x == "gray11"])
-            if(canvas.itemcget((x%ry) * ry + y%ROZMIAR + 1), "fill") == "gray64":
-                if(S <= 1 or S >= 4):
-                    L.append("gray64")
-                elif(S == 2 or S == 3):
-                    L.append("gray11")
+    for x in range(ry):
+        for y in range(ROZMIAR):
+            print(canvas.itemcget(y * ry + x + 1, "fill"))
+            #idzie od poczatku w dół po wierszach, a potem iteruje względem kolumn
 root = tk.Tk()
 root.geometry(f"{ROZDZ_X}x{ROZDZ_Y}")
 root.title("Game of Life")
